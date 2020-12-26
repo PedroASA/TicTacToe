@@ -1,0 +1,132 @@
+body {
+    height: 100%;
+    margin: 0;
+    background: #ff6e7f;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #bfe9ff, #ff6e7f);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #bfe9ff, #ff6e7f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+html {
+    height: 100%;
+}
+
+h5 {
+    background: tomato;
+    text-emphasis: triangle #D55;
+    text-align: center;
+}
+
+.row {
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* margin-top: 0em;
+    margin-bottom: 0em; */
+    margin: 0 auto;
+    /* padding: 0em; */
+    border-top: 2px;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: black;
+    border-style: solid;
+    width:60vw;
+    height: 80vh;
+    text-align:center;
+}
+
+#last {
+    border-bottom: 0em;
+}
+#first {
+    border-top: 0em;
+}
+
+.h-30 {
+    height: 30%;
+}
+
+ .col-4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0em;
+    text-align: center;
+    margin-bottom: 0em;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    border-color: black;
+    padding: 0em;
+} 
+
+.col-4.fst {
+    border-left: 0em;
+}
+
+.col-4.lst {
+    border-right: 0em;
+}
+
+h1 {
+    text-align: center;
+    background-color:black;
+    color:white;
+    margin: auto;
+}
+
+#grids {
+    /* margin-left:5em; */
+    padding-left:10vw;
+    padding-right:10vw;
+    /* margin-right:5em; */
+    margin-top: 20vh;
+    /* display: grid; */
+    height: calc(50vw - 5px);
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+button {
+    margin: 5px;
+    padding: 5px;
+}
+
+.my-button {
+    background-color: transparent;
+    border: transparent;
+    height: 100%;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #eaeaea;
+  }
+.h-60 {
+    height: 60vh;
+    margin-top: 5em;
+}
+.nav-item {
+    margin: auto;
+}
+
+.nav {
+    background: #cc2b5e;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to bottom, #753a88, #cc2b5e);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to bottom, #753a88, #cc2b5e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    border-style: solid;
+    border-color: black;
+    margin-bottom: 2em;
+}
+
+.jumbotron {
+    margin-bottom: 0;
+    background-image: url("./images/Frame2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    border-style: solid;
+    border-color: black;
+    min-height: 250px;
+  }
+  
