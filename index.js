@@ -44,7 +44,8 @@ function addBtnList (func) {
 
 function loop () {
     //console.log(`counter = ${counter}`);
-    if(tic_tac_toe.player()) {
+    //if(tic_tac_toe.player()) {
+    if(counter % 2 === 0) {
         addBtnList(putX);
     }
     else {
@@ -55,8 +56,8 @@ function loop () {
 
 //INIT
 
-//var counter = 0;
-var tic_tac_toe = new TicTacToe();
+var counter = 0;
+//var tic_tac_toe = new TicTacToe();
 
 document.addEventListener('DOMContentLoaded', 
 () => {
@@ -66,3 +67,5 @@ document.addEventListener('DOMContentLoaded',
         loop();
     }
 );
+
+export {my_reset};
