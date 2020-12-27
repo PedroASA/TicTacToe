@@ -23,6 +23,17 @@ export default class TicTacToe {
         return k[0] !== FIELD._ && k.every( (val, i, arr) => val === arr[0] );
     }
 
+    util(val: FIELD): number {
+        switch(val) {
+            case FIELD._:
+                return 0;
+            case FIELD.X:
+                    return 1;
+            case FIELD.O:
+                return -1;   
+        }
+    }
+
     winner(): FIELD {
         //check rows
         for(let t=0; t< 9; t+=3) {
