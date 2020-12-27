@@ -1,11 +1,5 @@
-tsconfig.json
-
-jsconfig.json
-
 *.map
 
 test*
-
-.vscode
 
 debug.log
