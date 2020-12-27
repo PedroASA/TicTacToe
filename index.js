@@ -40,24 +40,37 @@ function addBtnList (func) {
    )
 }
 
+function rmvBtnList() {
+    document.querySelectorAll('.my-button').forEach(
+        it => {
+            if(!it.disabled)
+                it.removeEventListener("click");
+        }      
+   )
+}
+
 //MAIN LOOP
 
 function loop () {
-    //console.log(`counter = ${counter}`);
-    //if(tic_tac_toe.player()) {
-    if(counter % 2 === 0) {
-        addBtnList(putX);
+    if(!tic_tac_toe.is_over()) {
+        if(tic_tac_toe.player()) {
+            addBtnList(putX);
+        }
+        else {
+            addBtnList(putO);
+        }
     }
     else {
-        addBtnList(putO);
+        let t = tic_tac_toe.util(tic_tac_toe.winner()) == 1 ? "X" : "O";
+        alert(`Player ${t} has won the game!`);
+        rmvBtnList();
     }
-    counter++;
 }
 
 //INIT
 
-var counter = 0;
-//var tic_tac_toe = new TicTacToe();
+
+var tic_tac_toe = new TicTacToe();
 
 document.addEventListener('DOMContentLoaded', 
 () => {
@@ -67,5 +80,3 @@ document.addEventListener('DOMContentLoaded',
         loop();
     }
 );
-
-export {my_reset};
