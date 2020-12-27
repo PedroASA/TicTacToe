@@ -4,29 +4,39 @@ var FIELD;
     FIELD[FIELD["O"] = 1] = "O";
     FIELD[FIELD["_"] = 2] = "_";
 })(FIELD || (FIELD = {}));
-export default class TicTacToe {
-    constructor() {
+var TicTacToe = (function () {
+    function TicTacToe() {
         this.counter = 0;
         this.board = [FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._];
     }
-    player() {
+    TicTacToe.prototype.player = function () {
         return this.counter % 2 == 0 ? FIELD.X : FIELD.O;
-    }
+    };
     ;
-    put(btn_num) {
+    TicTacToe.prototype.put = function (btn_num) {
         if (this.board[btn_num] === FIELD._)
             this.board[btn_num] = this.player();
-    }
+    };
     ;
-    check(k) {
-        return k[0] !== FIELD._ && k.every((val, i, arr) => val === arr[0]);
-    }
-    winner() {
-        for (let t = 0; t < 9; t += 3) {
+    TicTacToe.prototype.check = function (k) {
+        return k[0] !== FIELD._ && k.every(function (val, i, arr) { return val === arr[0]; });
+    };
+    TicTacToe.prototype.util = function (val) {
+        switch (val) {
+            case FIELD._:
+                return 0;
+            case FIELD.X:
+                return 1;
+            case FIELD.O:
+                return -1;
+        }
+    };
+    TicTacToe.prototype.winner = function () {
+        for (var t = 0; t < 9; t += 3) {
             if (this.check(this.board.slice(t, t + 3)))
                 return this.board[t];
         }
-        for (let t = 0; t < 3; t++) {
+        for (var t = 0; t < 3; t++) {
             if (this.check([this.board[t], this.board[t + 3], this.board[t + 6]]))
                 return this.board[t];
         }
@@ -37,13 +47,15 @@ export default class TicTacToe {
             return this.board[0];
         }
         return FIELD._;
-    }
-    is_over() {
+    };
+    TicTacToe.prototype.is_over = function () {
         if (this.winner() === FIELD._) {
-            return this.board.every((val, i, arr) => val !== FIELD._);
+            return this.board.every(function (val, i, arr) { return val !== FIELD._; });
         }
         return true;
-    }
-}
-TicTacToe.FIELD = FIELD;
+    };
+    TicTacToe.FIELD = FIELD;
+    return TicTacToe;
+})();
+exports.default = TicTacToe;
 //# sourceMappingURL=tic-tac-toe.js.map
