@@ -20,6 +20,7 @@ function addImage (button, image, size) {
     button.style.backgroundRepeat = "no-repeat";
     button.style.backgroundPosition = "center";
     button.disabled = true;
+    tic_tac_toe.put(button.id);
 }
  
 function putX(button) {
