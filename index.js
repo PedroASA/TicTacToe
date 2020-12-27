@@ -1,4 +1,4 @@
-import TicTacToe from './dist/tic-tac-toe';
+import TicTacToe from './dist/tic-tac-toe.js';
 
 function my_reset() {
     alert("Reset Button!");
