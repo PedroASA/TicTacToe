@@ -11,12 +11,15 @@ export default class TicTacToe {
     private board: FIELD[] = [FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._];
 
     player(): FIELD {
-        return this.counter % 2 == 0 ? FIELD.X : FIELD.O;
+        return this.counter % 2 === 0 ? FIELD.X : FIELD.O;
     };
 
     put(btn_num: number): void {
-        if(this.board[btn_num] === FIELD._)
+        if(this.board[btn_num] === FIELD._) {
             this.board[btn_num] = this.player();
+            console.log(this.counter++);
+            console.log(this.board);
+        }
     }; 
 
     private check(k:FIELD[]): boolean {

@@ -4,24 +4,27 @@ var FIELD;
     FIELD[FIELD["O"] = 1] = "O";
     FIELD[FIELD["_"] = 2] = "_";
 })(FIELD || (FIELD = {}));
-var TicTacToe = (function () {
-    function TicTacToe() {
+export default class TicTacToe {
+    constructor() {
         this.counter = 0;
         this.board = [FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._];
     }
-    TicTacToe.prototype.player = function () {
+    player() {
         return this.counter % 2 == 0 ? FIELD.X : FIELD.O;
-    };
+    }
     ;
-    TicTacToe.prototype.put = function (btn_num) {
-        if (this.board[btn_num] === FIELD._)
+    put(btn_num) {
+        if (this.board[btn_num] === FIELD._) {
             this.board[btn_num] = this.player();
-    };
+            console.log(this.counter++);
+            console.log(this.board);
+        }
+    }
     ;
-    TicTacToe.prototype.check = function (k) {
-        return k[0] !== FIELD._ && k.every(function (val, i, arr) { return val === arr[0]; });
-    };
-    TicTacToe.prototype.util = function (val) {
+    check(k) {
+        return k[0] !== FIELD._ && k.every((val, i, arr) => val === arr[0]);
+    }
+    util(val) {
         switch (val) {
             case FIELD._:
                 return 0;
@@ -30,16 +33,19 @@ var TicTacToe = (function () {
             case FIELD.O:
                 return -1;
         }
-    };
-    TicTacToe.prototype.winner = function () {
-        for (var t = 0; t < 9; t += 3) {
+    }
+    winner() {
+        //check rows
+        for (let t = 0; t < 9; t += 3) {
             if (this.check(this.board.slice(t, t + 3)))
                 return this.board[t];
         }
-        for (var t = 0; t < 3; t++) {
+        //check columns
+        for (let t = 0; t < 3; t++) {
             if (this.check([this.board[t], this.board[t + 3], this.board[t + 6]]))
                 return this.board[t];
         }
+        //check diagonals
         if (this.check([this.board[0], this.board[4], this.board[8]])) {
             return this.board[0];
         }
@@ -47,15 +53,12 @@ var TicTacToe = (function () {
             return this.board[0];
         }
         return FIELD._;
-    };
-    TicTacToe.prototype.is_over = function () {
+    }
+    is_over() {
         if (this.winner() === FIELD._) {
-            return this.board.every(function (val, i, arr) { return val !== FIELD._; });
+            return this.board.every((val, i, arr) => val !== FIELD._);
         }
         return true;
-    };
-    TicTacToe.FIELD = FIELD;
-    return TicTacToe;
-})();
-exports.default = TicTacToe;
-//# sourceMappingURL=tic-tac-toe.js.map
+    }
+}
+TicTacToe.FIELD = FIELD;
