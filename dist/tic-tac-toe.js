@@ -10,13 +10,13 @@ export default class TicTacToe {
         this.board = [FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._];
     }
     player() {
-        return this.counter % 2 == 0 ? FIELD.X : FIELD.O;
+        return this.counter % 2 === 0 ? FIELD.X : FIELD.O;
     }
     ;
     put(btn_num) {
         if (this.board[btn_num] === FIELD._) {
             this.board[btn_num] = this.player();
-            console.log(this.counter++);
+            this.counter++;
             console.log(this.board);
         }
     }
