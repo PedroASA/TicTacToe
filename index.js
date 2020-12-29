@@ -8,7 +8,6 @@ function my_reset() {
             this.disabled= false;
             $( this ).on("mouseenter", function () { this.style.backgroundColor = "#eaeaea";});
             $( this ).on("mouseleave",function () { this.style.background = "none"; });
-            //$( this ).off(onclick);
         }
     )
         
@@ -29,7 +28,7 @@ function addImage (button, image, size) {
 
     tic_tac_toe.put(parseInt(button.id, 10));
 
-    if(!tic_tac_toe.is_over()) {
+    if(tic_tac_toe.is_over()) {
         let t = tic_tac_toe.util(tic_tac_toe.winner()) === 1 ? "X" : "O";
         alert(`Player ${t} has won the game!`);
         rmvBtnList();
@@ -61,7 +60,6 @@ function addBtnList (func) {
             if(!this.disabled)
                 $( this ).on("click", func);
         }
-        
    )
 }
 
@@ -90,7 +88,7 @@ document.addEventListener('DOMContentLoaded',
         let i = 0;
         $('.my-button').each(
             function () {
-                $( this ).id = i++;
+                this.id = i++;
             }
         );
 

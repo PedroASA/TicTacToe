@@ -14,10 +14,10 @@ export default class TicTacToe {
     }
     ;
     put(btn_num) {
+        console.log(this.board);
         if (this.board[btn_num] === FIELD._) {
             this.board[btn_num] = this.player();
             this.counter++;
-            console.log(this.board);
         }
     }
     ;
