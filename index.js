@@ -17,6 +17,7 @@ function my_reset() {
 }
 
 function my_hint () {
+    alert("Yet to be Implementated!");
 }
 
 
