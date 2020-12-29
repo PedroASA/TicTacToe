@@ -6,7 +6,7 @@ Minimalistic tic tac toe front end implementation and design.
 * **CSS Grids**
 
 
-* **JavaScript Event Listeners/ JQuery**/
+* **JavaScript Event Listeners/ JQuery**
 
 
 * **MinMax algorithm**
