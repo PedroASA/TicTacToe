@@ -11,16 +11,29 @@ export default class TicTacToe {
     private board: FIELD[] = [FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._];
 
     player(): FIELD {
-        return this.counter % 2 == 0 ? FIELD.X : FIELD.O;
+        return this.counter % 2 === 0 ? FIELD.X : FIELD.O;
     };
 
     put(btn_num: number): void {
-        if(this.board[btn_num] === FIELD._)
+        if(this.board[btn_num] === FIELD._) {
             this.board[btn_num] = this.player();
+            this.counter++;
+        }
     }; 
 
     private check(k:FIELD[]): boolean {
         return k[0] !== FIELD._ && k.every( (val, i, arr) => val === arr[0] );
+    }
+
+    util(val: FIELD): number {
+        switch(val) {
+            case FIELD._:
+                return 0;
+            case FIELD.X:
+                    return 1;
+            case FIELD.O:
+                return -1;   
+        }
     }
 
     winner(): FIELD {
@@ -39,7 +52,7 @@ export default class TicTacToe {
             return this.board[0];
         }
         if(this.check([this.board[2], this.board[4], this.board[6]])) {
-            return this.board[0];
+            return this.board[2];
         }
         return FIELD._;
 
