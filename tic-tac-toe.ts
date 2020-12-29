@@ -52,7 +52,7 @@ export default class TicTacToe {
             return this.board[0];
         }
         if(this.check([this.board[2], this.board[4], this.board[6]])) {
-            return this.board[0];
+            return this.board[2];
         }
         return FIELD._;
 

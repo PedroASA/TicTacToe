@@ -12,6 +12,8 @@ function my_reset() {
     )
         
     tic_tac_toe = new TicTacToe();
+    init();
+
 }
 
 function my_hint () {
@@ -29,9 +31,15 @@ function addImage (button, image, size) {
     tic_tac_toe.put(parseInt(button.id, 10));
 
     if(tic_tac_toe.is_over()) {
-        let t = tic_tac_toe.util(tic_tac_toe.winner()) === 1 ? "X" : "O";
-        alert(`Player ${t} has won the game!`);
-        rmvBtnList();
+        let t = tic_tac_toe.util(tic_tac_toe.winner());
+        if(t !== 0) {
+            let k = t == '1' ? 'X' : 'O';
+            alert(`Player ${ k } has won the game!`);
+            rmvBtnList();
+        }
+        else {
+            alert('Tie Game!');
+        }
     }
 }
  
@@ -77,6 +85,10 @@ function rmvBtnList() {
 
 //INIT
 
+function init() {
+    addBtnList(putX);
+}
+
 
 var tic_tac_toe = new TicTacToe();
 
@@ -91,7 +103,6 @@ document.addEventListener('DOMContentLoaded',
                 this.id = i++;
             }
         );
-
-        addBtnList(putX);
+        init();
     }
 );
