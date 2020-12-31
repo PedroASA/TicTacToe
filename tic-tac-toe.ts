@@ -1,68 +1,55 @@
-enum FIELD {
-    X,
-    O,
-    _,
-}
+import Board from './board';
 
 export default class TicTacToe {
 
-    static FIELD = FIELD;
-    private counter = 0;
-    private board: FIELD[] = [FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._];
-
-    player(): FIELD {
-        return this.counter % 2 === 0 ? FIELD.X : FIELD.O;
-    };
-
-    put(btn_num: number): void {
-        if(this.board[btn_num] === FIELD._) {
-            this.board[btn_num] = this.player();
-            this.counter++;
-        }
-    }; 
-
-    private check(k:FIELD[]): boolean {
-        return k[0] !== FIELD._ && k.every( (val, i, arr) => val === arr[0] );
-    }
-
-    util(val: FIELD): number {
-        switch(val) {
-            case FIELD._:
-                return 0;
-            case FIELD.X:
-                    return 1;
-            case FIELD.O:
-                return -1;   
-        }
-    }
-
-    winner(): FIELD {
-        //check rows
-        for(let t=0; t< 9; t+=3) {
-            if(this.check(this.board.slice(t, t+3)))
-                return this.board[t];
-        }
-        //check columns
-        for(let t=0; t< 3; t++) {
-            if(this.check([this.board[t], this.board[t+3], this.board[t+6]]))
-            return this.board[t];
-        }
-        //check diagonals
-        if(this.check([this.board[0], this.board[4], this.board[8]])) {
-            return this.board[0];
-        }
-        if(this.check([this.board[2], this.board[4], this.board[6]])) {
-            return this.board[0];
-        }
-        return FIELD._;
+    private util(board: Board): number {
 
     }
-    
-    is_over(): boolean {
-        if(this.winner() === FIELD._) {
-            return this.board.every( (val, i, arr) => val !== FIELD._ );
+
+
+    //returns best play given a board
+    //maximize O play and minimize X play
+    minmax(board: Board) {
+
+        const max = () => {
+            let max_util = 0, best_play = null;
+            for(let cell of board.empty_cells()) {
+                let play:[number, number] = [cell, -1];
+                board.put(play);
+                min();
+                let t = this.util(board);
+                if(t > max_util) {
+                    max_util = t;
+                    best_play = play;
+                }
+                board.undo(cell);
+            }
         }
-        return true;
+
+        const min = () => {
+            let min_util = 0, best_play = null;
+            for(let cell of board.empty_cells()) {
+                let play:[number, number] = [cell, 1];
+                board.put(play);
+                min();
+                let t = this.util(board);
+                if(t < min_util) {
+                    min_util = t;
+                    best_play = play;
+                }
+                board.undo(cell);
+            }
+        }
+
+        if(board.is_over()) {
+            return null;
+        }
+
+        let res = 
+            board.player() === 1 ? 
+                min() : max();
+
+        return res;
     }
 
 }
