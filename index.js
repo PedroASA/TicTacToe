@@ -1,4 +1,4 @@
-import TicTacToe from './dist/tic-tac-toe.js';
+import Board from './dist/board.js';
 
 function my_reset() {
     alert("Reset Button!");
@@ -11,7 +11,9 @@ function my_reset() {
         }
     )
         
-    tic_tac_toe = new TicTacToe();
+    init();
+    board = new Board();
+    // addBtnList(putX);
 }
 
 function my_hint () {
@@ -24,25 +26,36 @@ function addImage (button, image, size) {
     button.style.backgroundRepeat = "no-repeat";
     button.style.backgroundPosition = "center";
     button.disabled = true;
+}
 
-
-    tic_tac_toe.put(parseInt(button.id, 10));
-
-    if(tic_tac_toe.is_over()) {
-        let t = tic_tac_toe.util(tic_tac_toe.winner()) === 1 ? "X" : "O";
-        alert(`Player ${t} has won the game!`);
-        rmvBtnList();
+function finish_game() {
+    let t;
+    switch(board.winner()) {
+        case 1:
+            t = `Player X has won the game!`;
+            break;
+        case -1:
+            t = `Player O has won the game!`;
+            break;
+        default:
+            t =  `Tie Game!`
     }
+    alert(t);
+    rmvBtnList();
 }
  
 function putX() {
     addImage(this, "./images/X.png", "50% 80%");
+    board.put([parseInt(this.id, 10), 1]);
+    if(board.is_over()) finish_game();
     addBtnList(putO);
 
 }
 
 function putO () {
     addImage(this, "./images/O.png", "70% 90%");
+    board.put([parseInt(this.id, 10), -1]);
+    if(board.is_over()) finish_game();
     addBtnList(putX);
 }
 
@@ -54,13 +67,14 @@ function inv(f) {
 }
 
 function addBtnList (func) {
+
     $('.my-button').each(
         function () {
             $( this ).off("click", inv(`${func}`));
             if(!this.disabled)
                 $( this ).on("click", func);
         }
-   )
+    )
 }
 
 
@@ -77,9 +91,11 @@ function rmvBtnList() {
 
 //INIT
 
+var board = new Board();
 
-var tic_tac_toe = new TicTacToe();
-
+function init() {
+    addBtnList(putX);
+}
 
 document.addEventListener('DOMContentLoaded', 
 () => {
@@ -91,7 +107,7 @@ document.addEventListener('DOMContentLoaded',
                 this.id = i++;
             }
         );
-
-        addBtnList(putX);
+        
+        init();
     }
 );

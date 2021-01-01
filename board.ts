@@ -26,7 +26,7 @@ export default class Board {
     }
     
     is_over(): boolean {
-        if(this.winner() === FIELD._) {
+        if(this.find_winner() === FIELD._) {
             return this.board.every( (val, i, arr) => val !== FIELD._ );
         }
         return true;
