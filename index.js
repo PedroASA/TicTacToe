@@ -1,4 +1,5 @@
 import Board from './dist/board.js';
+import minmax from './dist/tic-tac-toe.js';
 
 function my_reset() {
     alert("Reset Button!");
@@ -10,21 +11,21 @@ function my_reset() {
             $( this ).on("mouseleave",function () { this.style.background = "none"; });
         }
     )
-        
-    init();
     board = new Board();
-    // addBtnList(putX);
+    addBtnList();
 }
 
 function my_hint () {
+    alert("No Hint Implemented!");
 }
 
 
 function addImage (button, image, size) {
+
     button.style.background = `url(${image})`;
     button.style.backgroundSize = size;
     button.style.backgroundRepeat = "no-repeat";
-    button.style.backgroundPosition = "center";
+    button.style.backgroundPosition =  "center";
     button.disabled = true;
 }
 
@@ -38,64 +39,55 @@ function finish_game() {
             t = `Player O has won the game!`;
             break;
         default:
-            t =  `Tie Game!`
+            t =  `Tie Game!`;
     }
     alert(t);
     rmvBtnList();
 }
  
-function putX() {
-    addImage(this, "./images/X.png", "50% 80%");
-    board.put([parseInt(this.id, 10), 1]);
+function putX(button) {
+    addImage(button, "./images/X.png", "50% 80%");
+    board.put([parseInt(button.id, 10), 1]);
     if(board.is_over()) finish_game();
-    addBtnList(putO);
 
 }
-
+//call putO after putX is finished
 function putO () {
-    addImage(this, "./images/O.png", "70% 90%");
-    board.put([parseInt(this.id, 10), -1]);
+    let play = minmax(board);
+    if(play === null) alert("Play is Null");
+    else {
+        addImage($(`#${play[0]}`)[0], "./images/O.png", "70% 90%");
+        board.put(play);
+    }
     if(board.is_over()) finish_game();
-    addBtnList(putX);
 }
 
-function inv(f) {
-    if(f === "putO") 
-        putX;
-    else
-        putO;
-}
+function addBtnList () {
 
-function addBtnList (func) {
-
+    $('.my-button').off("click");
     $('.my-button').each(
         function () {
-            $( this ).off("click", inv(`${func}`));
-            if(!this.disabled)
-                $( this ).on("click", func);
+
+            $( this )
+            .on("click", function () {
+                $.when(putX( $( this )[0] ))
+                .then(() => {
+                    if(!board.is_over())  
+                        putO()
+                });
+            });
         }
     )
 }
 
 
 function rmvBtnList() {
-    $('.my-button').each(
-        function () {
-            if(!this.disabled) {
-                $( this ).off();
-                this.disabled = true;
-            }
-        }      
-    )
+    $('.my-button').off()
 }
 
 //INIT
 
 var board = new Board();
-
-function init() {
-    addBtnList(putX);
-}
 
 document.addEventListener('DOMContentLoaded', 
 () => {
@@ -107,7 +99,6 @@ document.addEventListener('DOMContentLoaded',
                 this.id = i++;
             }
         );
-        
-        init();
+        addBtnList();
     }
 );
