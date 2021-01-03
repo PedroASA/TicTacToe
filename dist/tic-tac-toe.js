@@ -1,64 +1,58 @@
-var FIELD;
-(function (FIELD) {
-    FIELD[FIELD["X"] = 0] = "X";
-    FIELD[FIELD["O"] = 1] = "O";
-    FIELD[FIELD["_"] = 2] = "_";
-})(FIELD || (FIELD = {}));
-export default class TicTacToe {
-    constructor() {
-        this.counter = 0;
-        this.board = [FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._, FIELD._];
-    }
-    player() {
-        return this.counter % 2 === 0 ? FIELD.X : FIELD.O;
-    }
-    ;
-    put(btn_num) {
-        console.log(this.board);
-        if (this.board[btn_num] === FIELD._) {
-            this.board[btn_num] = this.player();
-            this.counter++;
+//returns best play given a board
+//maximize O play and minimize X play
+export default function minmax(board) {
+    const util = (val) => {
+        return -val;
+    };
+    /*Backtrack:
+        - put play in board
+        - call min with changed board
+        - remove play from board
+    Change board to avoid making a copy every call.
+    */
+    //let best_play = null;
+    //Maximize O
+    const max = () => {
+        //base case
+        if (board.is_over()) {
+            return [util(board.winner()), null];
         }
+        let max_util = -2, best_play = null;
+        for (let cell of board.empty_cells()) {
+            let play = [cell, -1];
+            board.put(play);
+            let t = min();
+            if (t > max_util) {
+                max_util = t;
+                best_play = play;
+            }
+            board.undo(cell);
+            if (max_util === 1)
+                break;
+        }
+        return [max_util, best_play];
+    };
+    const min = () => {
+        //base case
+        if (board.is_over()) {
+            return util(board.winner());
+        }
+        let min_util = 2;
+        for (let cell of board.empty_cells()) {
+            let play = [cell, 1];
+            board.put(play);
+            let t = max()[0];
+            if (t < min_util) {
+                min_util = t;
+            }
+            board.undo(cell);
+            if (min_util === -1)
+                break;
+        }
+        return min_util;
+    };
+    if (board.is_over()) {
+        return null;
     }
-    ;
-    check(k) {
-        return k[0] !== FIELD._ && k.every((val, i, arr) => val === arr[0]);
-    }
-    util(val) {
-        switch (val) {
-            case FIELD._:
-                return 0;
-            case FIELD.X:
-                return 1;
-            case FIELD.O:
-                return -1;
-        }
-    }
-    winner() {
-        //check rows
-        for (let t = 0; t < 9; t += 3) {
-            if (this.check(this.board.slice(t, t + 3)))
-                return this.board[t];
-        }
-        //check columns
-        for (let t = 0; t < 3; t++) {
-            if (this.check([this.board[t], this.board[t + 3], this.board[t + 6]]))
-                return this.board[t];
-        }
-        //check diagonals
-        if (this.check([this.board[0], this.board[4], this.board[8]])) {
-            return this.board[0];
-        }
-        if (this.check([this.board[2], this.board[4], this.board[6]])) {
-            return this.board[0];
-        }
-        return FIELD._;
-    }
-    is_over() {
-        if (this.winner() === FIELD._) {
-            return this.board.every((val, i, arr) => val !== FIELD._);
-        }
-        return true;
-    }
+    return max()[1];
 }
-TicTacToe.FIELD = FIELD;
