@@ -13,9 +13,9 @@ export default class Board {
     }
     ;
     put(play) {
-        let btn_num = play[0], player = play[1];
+        let btn_num = play[0], player = this.field(play[1]);
         if (this.board[btn_num] === FIELD._) {
-            this.board[btn_num] = this.field(player);
+            this.board[btn_num] = player;
         }
     }
     ;
@@ -93,7 +93,7 @@ export default class Board {
             return this.board[0];
         }
         if (this.check([this.board[2], this.board[4], this.board[6]])) {
-            return this.board[0];
+            return this.board[2];
         }
         return FIELD._;
     }
