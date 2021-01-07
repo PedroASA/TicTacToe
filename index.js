@@ -7,8 +7,7 @@ function my_reset() {
         function() {
             this.style.background = "none";
             this.disabled= false;
-            $( this ).on("mouseenter", function () { this.style.backgroundColor = "#eaeaea";});
-            $( this ).on("mouseleave",function () { this.style.background = "none"; });
+            addHover();
         }
     )
     board = new Board();
@@ -16,9 +15,20 @@ function my_reset() {
 }
 
 function my_hint () {
-    alert("No Hint Implemented!");
+    if(!board.is_over()) {
+        let play = minmax(board), button = $(`#${play[0]}`);
+        button.css({
+            "border-color": "yellow"
+        });
+        button.on("click", () => button.css("border-color", "transparent"));
+    }
+
 }
 
+function addHover() {
+    $( '.my-button' ).on("mouseenter", function () { this.style.backgroundColor = "#eaeaea";});
+    $( '.my-button' ).on("mouseleave",function () { this.style.background = "none"; });
+}
 
 function addImage (button, image, size) {
 
@@ -30,18 +40,30 @@ function addImage (button, image, size) {
 }
 
 function finish_game() {
-    let t;
+    let message, alerts = {
+        '1': 'success',
+        '0': 'secondary',
+        '-1': 'danger'
+    }, alert_type;
     switch(board.winner()) {
         case 1:
-            t = `Player X has won the game!`;
+            alert_type = alerts[1]
+            message = `Player X has won the game!`;
             break;
         case -1:
-            t = `Player O has won the game!`;
+            alert_type = alerts[-1]
+            message = `Player O has won the game!`;
             break;
         default:
-            t =  `Tie Game!`;
+            alert_type = alerts[0];
+            message =  `Tie Game!`;
     }
-    alert(t);
+    $('#exampleModalCenter').modal('show')
+    $('#message').html(
+        `<div class="alert alert-${alert_type}" role="alert"> 
+            <h2> ${message} </h2>
+        </div>`
+    );
     rmvBtnList();
 }
  
@@ -83,6 +105,7 @@ function addBtnList () {
 
 function rmvBtnList() {
     $('.my-button').off()
+    $('.my-button').disabled = true;
 }
 
 //INIT
@@ -93,6 +116,8 @@ document.addEventListener('DOMContentLoaded',
 () => {
     document.getElementById('rst-btn').onclick = my_reset;
     document.getElementById('hnt-btn').onclick = my_hint;
+    addHover();
+
         let i = 0;
         $('.my-button').each(
             function () {
