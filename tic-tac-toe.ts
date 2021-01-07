@@ -5,9 +5,9 @@ type Play = [number, number];
 //returns best play given a board
 //maximize O play and minimize X play
 export default function  minmax(board: Board): Play | null {
-
+    
     const util = (val: number): number => {
-        return -val;
+        return player === 1? val: -val;
     }
 
     /*Backtrack:
@@ -19,7 +19,7 @@ export default function  minmax(board: Board): Play | null {
 
     //let best_play = null;
 
-    //Maximize O
+    //Maximize ${player}'s play
     const max = () : [number, Play| null] => {
 
         //base case
@@ -29,7 +29,7 @@ export default function  minmax(board: Board): Play | null {
 
         let max_util = -2, best_play = null;
         for(let cell of board.empty_cells()) {
-            let play: Play = [cell, -1];
+            let play: Play = [cell, player];
             board.put(play);
             let t = min();
             if(t > max_util) {
@@ -51,7 +51,7 @@ export default function  minmax(board: Board): Play | null {
 
         let min_util = 2;
         for(let cell of board.empty_cells()) {
-            let play: Play = [cell, 1];
+            let play: Play = [cell, -player];
             board.put(play);
             let t = max()[0];
             if(t < min_util) {
@@ -66,6 +66,8 @@ export default function  minmax(board: Board): Play | null {
     if(board.is_over()) {
         return null;
     }
+
+    var player = board.player();
 
     return max()[1];
 }
