@@ -3,10 +3,10 @@ Minimalistic tic tac toe front end implementation and design.
 
 ### About the implementation:
 
-* CSS Grids
+* **CSS Grids**
 
 
-* JavaScript Event Listeners
+* __JavaScript Event Listeners / JQuery__
 
 
-* MinMax algorithm
+* __MinMax algorithm__
